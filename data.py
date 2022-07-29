@@ -6,6 +6,7 @@ import albumentations as A
 import cv2
 from tqdm import tqdm
 
+
 def create_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -36,8 +37,6 @@ def augument_data(images_list, masks_list, aug_dest_dir, augument=True):
         mask = cv2.imread(m, cv2.IMREAD_COLOR)
 
         if augument:
-
-            num_of_copies = 5
 
             transform = A.Compose([
                 A.HorizontalFlip(p=0.5),
@@ -70,8 +69,8 @@ def augument_data(images_list, masks_list, aug_dest_dir, augument=True):
             # img_rotated  = rotate_transform['image']
             # mask_rotated = rotate_transform['mask']
 
-            # x = [img, img_flip, img_grey, img_chnl_shift, img_with_holes, img_rotated]
-            # y = [mask, mask_flip, mask_grey, mask_chnl_shift, mask_with_holes, mask_rotated]
+            # transformed_image_list = [img, img_flip, img_grey, img_chnl_shift, img_with_holes, img_rotated]
+            # transformed_mask_list = [mask, mask_flip, mask_grey, mask_chnl_shift, mask_with_holes, mask_rotated]
 
             transformed_image_list = []
             transformed_mask_list  = []
@@ -117,5 +116,6 @@ if __name__ == '__main__':
     create_dir('people_segmentation/augumented_data/test/images')
     create_dir('people_segmentation/augumented_data/test/masks')
 
+    # augumenting the data
     augument_data(train_img, train_mask, 'people_segmentation/augumented_data/train')
     augument_data(test_img, test_mask, 'people_segmentation/augumented_data/test', augument=False)
